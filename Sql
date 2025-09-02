@@ -1,0 +1,35 @@
+column_names = [
+    "exchange",
+    "stock_symbol",
+    "date",
+    "open_price",
+    "high_price",
+    "low_price",
+    "close_price",
+    "volume",
+    "adjusted_close_price"
+]
+ 
+# Read the TSV file without header
+df = pd.read_csv("/Volumes/workspace/default/data/NYSE_daily.tsv", sep="\t", header=None)
+df.columns = column_names
+ 
+# Save back with header
+df.to_csv('/Volumes/workspace/default/data/NYSE_daily.tsv', index=False, header=True)
+df.display()
+import pandas as pd
+
+# Define column names
+column_names = [
+    "exchange",
+    "stock_symbol",
+    "date",
+    "dividends"
+]
+ 
+# Read the TSV file without header
+df_2 = pd.read_csv("/Volumes/workspace/default/data/NYSE_dividends.tsv", sep="\t", header=None)
+df_2.columns = column_names
+ 
+# Save back with header
+df_2.to_csv('/Volumes/workspace/default/data/NYSE_dividends.tsv', index=False, header=True)
