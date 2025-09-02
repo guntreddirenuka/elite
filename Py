@@ -1,0 +1,31 @@
+spark_df = spark.createDataFrame(df)
+spark_df_div = spark.createDataFrame(df_div)
+spark_df.write.saveAsTable("daily")
+spark_df_div.write.saveAsTable("dividends")
+%sql
+SELECT DISTINCT stock_symbol
+FROM daily
+WHERE close_price >= 200 AND volume >= 10000000
+
+
+%sql
+SELECT stock_symbol, COUNT(*) AS dividend_count
+FROM dividends
+GROUP BY stock_symbol
+HAVING COUNT(*) > 50
+
+
+
+%sql
+SELECT
+ d.stock_symbol,
+ d.close_price,
+ div.dividends,
+ div.date
+FROM daily d
+JOIN dividends div
+ ON d.stock_symbol = div.stock_symbol
+ AND d.date = div.date
+WHERE div.dividends > 0.01
+ AND d.close_price >= 100
+ORDER BY div.dividends ASC
